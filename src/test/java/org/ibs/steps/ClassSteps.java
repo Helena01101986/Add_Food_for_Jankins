@@ -1,34 +1,43 @@
 package org.ibs.steps;
 
 import io.cucumber.java.ru.*;
-import org.ibs.Driver;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ClassSteps {
-
-    DesiredCapabilities capabilities = new DesiredCapabilities();
-    WebDriver driver = new RemoteWebDriver(new URL("selenoid.url"), capabilities);
+    WebDriver driver = setupRemoteDriver();
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
+    public static RemoteWebDriver setupRemoteDriver() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("type.browser", "chrome");
+        selenoidOptions.put("browserVersion", "109.0");
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+        capabilities.setCapability("selenoid:options", selenoidOptions);
+        try{
+            return new RemoteWebDriver(URI.create("selenoid.url").toURL(), capabilities);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-    public ClassSteps() throws MalformedURLException {
+    public ClassSteps()  {
         //System.setProperty("webdriver.chromedriver.driver", "src\\test\\resources\\chromedriver.exe");
-
-
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
