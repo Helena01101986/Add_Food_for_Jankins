@@ -16,9 +16,9 @@ public class ClassSteps {
     WebDriver driver = new ChromeDriver();
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-
     public ClassSteps() {
         System.setProperty("webdriver.chromedriver.driver", "src\\test\\resources\\chromedriver.exe");
+
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
