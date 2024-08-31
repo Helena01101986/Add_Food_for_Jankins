@@ -6,18 +6,26 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class ClassSteps {
-    WebDriver driver = new ChromeDriver();
+    String remoteUrl = "http://149.154.71.152:8081/#/";
+    DesiredCapabilities capabilities = new DesiredCapabilities();
+    WebDriver driver = new RemoteWebDriver(new URL(remoteUrl), capabilities);
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    public ClassSteps() {
-        System.setProperty("webdriver.chromedriver.driver", "src\\test\\resources\\chromedriver.exe");
+
+    public ClassSteps() throws MalformedURLException {
+        //System.setProperty("webdriver.chromedriver.driver", "src\\test\\resources\\chromedriver.exe");
 
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

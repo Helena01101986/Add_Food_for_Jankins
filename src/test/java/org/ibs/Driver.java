@@ -24,6 +24,7 @@ public class Driver {
                 driver = new FirefoxDriver();
             } else if ("remote".equalsIgnoreCase(browser)) {
                 // Запуск через Selenoid
+
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setBrowserName("type.browser");
                 capabilities.setVersion("109.0");
