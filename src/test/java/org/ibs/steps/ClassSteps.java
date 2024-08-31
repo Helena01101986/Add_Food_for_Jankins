@@ -19,9 +19,11 @@ import java.util.concurrent.TimeUnit;
 
 public class ClassSteps {
     WebDriver driver = setupRemoteDriver();
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
 
     public static RemoteWebDriver setupRemoteDriver() {
+
         DesiredCapabilities capabilities = new DesiredCapabilities();
         Map<String, Object> selenoidOptions = new HashMap<>();
         selenoidOptions.put("browserName", "chrome");
@@ -38,18 +40,19 @@ public class ClassSteps {
 
     public ClassSteps()  {
         //System.setProperty("webdriver.chromedriver.driver", "src\\test\\resources\\chromedriver.exe");
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
 
     @Когда("Перейти на {string}")
     public void перейти_на(String String) {
-        driver.get("http://localhost:8080");
+        driver.get("http://149.154.71.152:8080/");
     }
 
     @Если("Выполнено нажатие на {string}")
     public void выполнено_нажатие_на(String menu) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@id='navbarDropdown']")));
         WebElement btnSandbox = driver.findElement(By.xpath("//a[@id = 'navbarDropdown']"));
         btnSandbox.click();
     }
