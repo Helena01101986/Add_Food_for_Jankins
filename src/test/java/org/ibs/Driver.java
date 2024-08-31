@@ -25,8 +25,10 @@ public class Driver {
             } else if ("remote".equalsIgnoreCase(browser)) {
                 // Запуск через Selenoid
                 DesiredCapabilities capabilities = new DesiredCapabilities();
-                capabilities.setBrowserName("chrome"); // или другой браузер
-                driver = new RemoteWebDriver(new URL("http://selenoid.example.com:4444/wd/hub"), capabilities);
+                capabilities.setBrowserName("type.browser");
+                capabilities.setVersion("109.0");
+                capabilities.setCapability("enableVNC", true);
+                driver = new RemoteWebDriver(new URL("selenoid.url"), capabilities);
             } else {
                 throw new IllegalArgumentException("Unknown browser: " + browser);
             }
