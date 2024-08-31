@@ -24,13 +24,13 @@ public class ClassSteps {
     public static RemoteWebDriver setupRemoteDriver() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         Map<String, Object> selenoidOptions = new HashMap<>();
-        selenoidOptions.put("type.browser", "chrome");
+        selenoidOptions.put("browserName", "chrome");
         selenoidOptions.put("browserVersion", "109.0");
         selenoidOptions.put("enableVNC", true);
         selenoidOptions.put("enableVideo", false);
         capabilities.setCapability("selenoid:options", selenoidOptions);
         try{
-            return new RemoteWebDriver(URI.create("selenoid.url").toURL(), capabilities);
+            return new RemoteWebDriver(URI.create("http://149.154.71.152:4444/wd/hub").toURL(), capabilities);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
