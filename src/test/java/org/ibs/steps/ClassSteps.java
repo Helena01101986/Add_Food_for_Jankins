@@ -196,9 +196,65 @@ public class ClassSteps {
         driver.close();
     }
 
+    @Когда("Ввести в поле {string} имя пользователя")
+    public void ввести_в_поле_имя_пользователя(String string) {
+        WebElement userName = driver.findElement(By.xpath("//input[@name = 'user']"));
+        userName.sendKeys("user");
+    }
 
+    @И("Ввести в поле {string} пароль")
+    public void ввести_в_поле_пароль(String string) {
+        WebElement pass = driver.findElement(By.xpath("//input[@name = 'password']"));
+        pass.sendKeys("pass");
+    }
 
+    @То("Нажать на кнопку {string}")
+    public void нажать_на_кнопку(String connect) {
+    WebElement btnCon = driver.findElement(By.xpath("//input[@value = 'Connect']"));
+    btnCon.click();
+    }
 
+    @Тогда("Выполнить запрос на добавление товара")
+    public void выполнить_запрос_на_добавление_товара() {
+        WebElement txtArea = driver.findElement(By.xpath("//textarea[@rows = '5']"));
+        txtArea.sendKeys("INSERT INTO food(food_name, food_type, food_exotic)VALUES('Дуриан', 'FRUIT', 1);");
+        WebElement btnRun = driver.findElement(By.xpath("//input[@value = 'Run']"));
+        btnRun.click();
+    }
+    @Допустим("Выполнить запрос для получения добавленного в БД товара")
+    public void выполнить_запрос_для_получения_добавленного_в_бд_товара() {
+        WebElement txtArea = driver.findElement(By.xpath("//textarea[@rows = '5']"));
+        txtArea.sendKeys("SELECT * FROM food WHERE food_name = 'Дуриан'");
+        WebElement btnRun = driver.findElement(By.xpath("//input[@value = 'Run']"));
+        btnRun.click();
+    }
+    @Допустим("Выполнить запрос для получения списка всех товаров")
+    public void выполнить_запрос_для_получения_списка_всех_товаров() {
+        WebElement txtArea = driver.findElement(By.xpath("//textarea[@rows = '5']"));
+        txtArea.sendKeys("SELECT * FROM food");
+        WebElement btnRun = driver.findElement(By.xpath("//input[@value = 'Run']"));
+        btnRun.click();
+    }
+    @Допустим("Выполнить запрос на удаление товара из таблицы")
+    public void выполнить_запрос_на_удаление_товара_из_таблицы() {
+        WebElement txtArea = driver.findElement(By.xpath("//textarea[@rows = '5']"));
+        txtArea.sendKeys("DELETE FROM food WHERE food_name = 'Дуриан'");
+        WebElement btnRun = driver.findElement(By.xpath("//input[@value = 'Run']"));
+        btnRun.click();
+    }
+
+    @Допустим("Страница добавления товара открыта")
+    public void страница_добавления_товара_открыта() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//textarea[@rows = '5']")));
+        WebElement txtArea = driver.findElement(By.xpath("//textarea[@rows = '5']"));
+        Assertions.assertTrue(txtArea.isDisplayed());
+
+    }
+
+    @Если("Перейти на страницу {string}")
+    public void перейти_на_страницу(String string) {
+        driver.get("http://149.154.71.152:8080/h2-console");
+    }
 
 }
 
